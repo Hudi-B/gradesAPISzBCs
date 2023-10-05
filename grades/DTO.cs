@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace grades.Controllers
+namespace grades.DTO
 {
-    public class DTO
-    {
+  
         public record GradeDto(Guid Id, int GradeT, string DescriptionT, string Created);
-    }
+        public record CreateGrade(int GradeT, string DescriptionT);
+        public record UpdateGrade(int GradeT, string DescriptionT);
+    
 }

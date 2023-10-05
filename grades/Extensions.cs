@@ -1,5 +1,7 @@
-﻿using grades.Models;
-using static grades.Controllers.DTO;
+﻿using grades.Controllers;
+using grades.DTO;
+using grades.Models;
+
 
 namespace grades
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using grades.Models;
-using static grades.Controllers.DTO;
 
 namespace grades.Models
 {

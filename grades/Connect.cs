@@ -1,5 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-using System.Reflection;
+
 
 namespace grades
 {
@@ -16,12 +16,11 @@ namespace grades
         public Connect()
         {
             Host = "192.168.50.54";
-            Port = "3017";
-            DbName = "db_user";
+            DbName = "db_grades";
             Username = "root";
             Password = "password";
 
-            ConnectionString = $"Host={Host};Port={Port};Database={DbName};User={Username};Password={Password};SSLMode=none";
+            ConnectionString = $"Host={Host};Database={DbName};User={Username};Password={Password}";
             connection = new MySqlConnection(ConnectionString);
         }
     }
