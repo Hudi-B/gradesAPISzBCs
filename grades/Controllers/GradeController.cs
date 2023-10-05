@@ -45,6 +45,35 @@ namespace grades.Controllers
             }
         }
 
+        [HttpGet("{Id}")]
+        public ActionResult<GradeDto> GetDbById(Guid Id)
+        {
+            try
+            {
+                connect.connection.Open();
+
+                string sql = $"SELECT * FROM `users` WHERE `users`.`Id` = @id";
+                MySqlCommand cmd = new MySqlCommand(sql, connect.connection);
+                cmd.Parameters.AddWithValue("id", Id);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                var userById = new GradeDto(
+                        reader.GetGuid(0),
+                        reader.GetInt32(1),
+                        reader.GetString(2),
+                        reader.GetString(3)
+                        );
+
+                connect.connection.Close();
+
+                return StatusCode(200, userById);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpPost]
         public ActionResult<GradeDto> AddGrade(CreateGrade createGrade)
         {
