@@ -56,6 +56,7 @@ namespace grades.Controllers
                 MySqlCommand cmd = new MySqlCommand(sql, connect.connection);
                 cmd.Parameters.AddWithValue("id", Id);
                 MySqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
 
                 var gradeById = new GradeDto(
                         reader.GetGuid(0),
@@ -118,7 +119,7 @@ namespace grades.Controllers
             {
                 connect.connection.Open();
 
-                string sql = $"UPDATE `grades` SET `Name` = '{grade.GradeT}', `Email` = '{grade.DescriptionT}' WHERE `grades`.`Id` = '{Id}'";
+                string sql = $"UPDATE `grades` SET `GradeT` = '{grade.GradeT}', `DescriptionT` = '{grade.DescriptionT}' WHERE `grades`.`Id` = '{Id}'";
 
                 MySqlCommand cmd = new MySqlCommand(sql, connect.connection);
                 cmd.ExecuteNonQuery();
@@ -140,7 +141,7 @@ namespace grades.Controllers
             {
                 connect.connection.Open();
 
-                string sql = $"DELETE FROM `users` WHERE `users`.`Id` = '{Id}'";
+                string sql = $"DELETE FROM `grades` WHERE `grades`.`Id` = '{Id}'";
 
                 MySqlCommand cmd = new MySqlCommand(sql, connect.connection);
                 cmd.ExecuteNonQuery();
