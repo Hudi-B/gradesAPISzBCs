@@ -52,12 +52,12 @@ namespace grades.Controllers
             {
                 connect.connection.Open();
 
-                string sql = $"SELECT * FROM `users` WHERE `users`.`Id` = @id";
+                string sql = $"SELECT * FROM `grades` WHERE `grades`.`Id` = @id";
                 MySqlCommand cmd = new MySqlCommand(sql, connect.connection);
                 cmd.Parameters.AddWithValue("id", Id);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
-                var userById = new GradeDto(
+                var gradeById = new GradeDto(
                         reader.GetGuid(0),
                         reader.GetInt32(1),
                         reader.GetString(2),
@@ -66,7 +66,7 @@ namespace grades.Controllers
 
                 connect.connection.Close();
 
-                return StatusCode(200, userById);
+                return StatusCode(200, gradeById);
             }
             catch (Exception e)
             {
@@ -103,6 +103,33 @@ namespace grades.Controllers
             catch (Exception e)
             {
                 return StatusCode(400, e);
+            }
+        }
+
+        [HttpPut]
+        public ActionResult UpdateGrade(Guid Id, UpdateGrade updateGrade)
+        {
+            var grade = new Grade
+            {
+                GradeT = updateGrade.GradeT,
+                DescriptionT = updateGrade.DescriptionT
+            };
+            try
+            {
+                connect.connection.Open();
+
+                string sql = $"UPDATE `grades` SET `Name` = '{grade.GradeT}', `Email` = '{grade.DescriptionT}' WHERE `grades`.`Id` = '{Id}'";
+
+                MySqlCommand cmd = new MySqlCommand(sql, connect.connection);
+                cmd.ExecuteNonQuery();
+
+                connect.connection.Close();
+
+                return StatusCode(201, grade);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
     }
