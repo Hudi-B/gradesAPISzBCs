@@ -41,7 +41,7 @@ namespace grades.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(503, e);
+                return BadRequest();
             }
         }
 
@@ -102,7 +102,7 @@ namespace grades.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(400, e);
+                return BadRequest();
             }
         }
 
@@ -126,6 +126,28 @@ namespace grades.Controllers
                 connect.connection.Close();
 
                 return StatusCode(201, grade);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteGrade(Guid Id)
+        {
+            try
+            {
+                connect.connection.Open();
+
+                string sql = $"DELETE FROM `users` WHERE `users`.`Id` = '{Id}'";
+
+                MySqlCommand cmd = new MySqlCommand(sql, connect.connection);
+                cmd.ExecuteNonQuery();
+
+                connect.connection.Close();
+
+                return StatusCode(201, sql);
             }
             catch (Exception)
             {
